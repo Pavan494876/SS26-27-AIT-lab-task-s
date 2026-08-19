@@ -1,0 +1,67 @@
+task2
+
+target = 10
+current = 2
+while current! = target
+     print("current state:",current)
+if current< target:
+current += 1
+else:
+current == 1
+print("Goal reached:",current)
+
+output:
+enter target Number:4
+enter start Number:2
+start state:2
+current state:3
+Target reached:4
+
+
+
+task2.2 
+
+matrix = [
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0]
+]
+
+source = (0, 0)
+destination = (1, 2)
+
+paths = []
+
+def find_paths(current, path):
+    if current == destination:
+        paths.append(path.copy())
+        return
+
+    x, y = current
+    target_x, target_y = destination
+
+    if x < target_x:
+        find_paths((x + 1, y), path + [(x + 1, y)])
+
+    if y < target_y:
+        find_paths((x, y + 1), path + [(x, y + 1)])
+
+find_paths(source, [source])
+
+print("All possible paths:")
+
+for i, path in enumerate(paths, 1):
+    distance = len(path) - 1
+    print("Path", i, ":", end=" ")
+    print(" -> ".join(str(position) for position in path))
+    print("Distance:", distance)
+
+output:
+
+All possible paths:
+Path 1 : (0, 0) -> (1, 0) -> (1, 1) -> (1, 2)
+Distance: 3
+Path 2 : (0, 0) -> (0, 1) -> (1, 1) -> (1, 2)
+Distance: 3
+Path 3 : (0, 0) -> (0, 1) -> (0, 2) -> (1, 2)
+Distance: 3
