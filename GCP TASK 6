@@ -1,0 +1,47 @@
+def is_safe(v, color, graph, colors):
+    for u in graph[v]:
+        if colors[u] == color:
+            return False
+    return True
+
+def color_graph(v, graph, colors, m):
+    # Base case: If all vertices are assigned a color, return True
+    if v == len(graph):
+        return True
+        
+    for c in range(1, m + 1):
+        if is_safe(v, c, graph, colors):
+            colors[v] = c
+            # Recursively assign colors to the rest of the vertices
+            if color_graph(v + 1, graph, colors, m):
+                return True
+            # Backtrack
+            colors[v] = 0
+            
+    return False
+
+# Graph represented as an adjacency list
+graph = [[1, 2], [0, 3], [0, 3], [1, 2, 4], [3]]
+n = len(graph)
+
+# Find the minimum number of colors required
+for m in range(1, n + 1):
+    colors = [0] * n
+    if color_graph(0, graph, colors, m):
+        print("Minimum no. of colors:", m)
+        for i, c in enumerate(colors):
+            print(f"{chr(65 + i)} -> color {c}")
+        break
+OUTPUT:
+Minimum no. of colors: 2
+A -> color 1
+B -> color 2
+C -> color 2
+D -> color 1
+E -> color 2
+
+    A (0)  ------  B (1)
+
+    |              |
+    |              |
+    C (2)  ------  D (3) ------ E (4)
