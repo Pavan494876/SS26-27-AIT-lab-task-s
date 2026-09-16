@@ -1,0 +1,33 @@
+# State: [Monkey_Pos, Monkey_Height, Box_Pos, Has_Banana]
+state = ["door", "floor", "window", False]
+banana = "middle"
+plan = []
+
+# 1. Go to box
+if state[0] != state[2]:
+    state[0] = state[2]
+    plan.append(f"Go to {state[2]}")
+
+# 2. Push box to banana
+if state[2] != banana:
+    state[0] = state[2] = banana
+    plan.append(f"Push box to {banana}")
+
+# 3. Climb box
+if state[0] == state[2] and state[1] == "floor":
+    state[1] = "box"
+    plan.append("Climb onto box")
+
+# 4. Grasp banana
+if state[1] == "box" and state[2] == banana:
+    state[3] = True
+    plan.append("Grasp banana")
+
+print("\n".join(f"Step {i+1}: {act}" for i, act in enumerate(plan)))
+print(f"Goal Reached: {state[3]}")
+OUTPUT:
+Step 1: Go to window
+Step 2: Push box to middle
+Step 3: Climb onto box
+Step 4: Grasp banana
+Goal Reached: True
